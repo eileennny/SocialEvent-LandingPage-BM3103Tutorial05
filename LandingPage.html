@@ -1,0 +1,241 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Modern Social Events Landing Page</title>
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet">
+
+<style>
+  body {
+    font-family: 'Inter', Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background: linear-gradient(135deg, #d9f2ef, #f0faf9);
+    min-height: 100vh;
+  }
+
+  /* ---------- HEADER ---------- */
+  .header {
+    text-align: center;
+    padding: 60px 20px 20px;
+  }
+
+  .header h1 {
+    font-size: 40px;
+    font-weight: 700;
+    color: #0f766e;
+    margin: 0;
+  }
+
+  .header p {
+    margin-top: 10px;
+    font-size: 20px;
+    color: #555;
+  }
+
+  /* ---------- OPTIONS CONTAINER ---------- */
+  .options-container {
+    display: flex;
+    justify-content: center;
+    gap: 40px;
+    flex-wrap: wrap;
+    padding: 50px 20px;
+  }
+
+  /* ---------- GLASS CARD STYLE ---------- */
+  .option-card, #form-card {
+    width: 330px;
+    padding: 35px 25px;
+    border-radius: 20px;
+    background: rgba(255, 255, 255, 0.75);
+    backdrop-filter: blur(12px);
+    box-shadow: 0 20px 40px rgba(0,0,0,0.08);
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    transition: transform 0.35s, box-shadow 0.35s;
+  }
+
+  .option-card:hover {
+    transform: translateY(-8px);
+    box-shadow: 0 28px 50px rgba(0,0,0,0.12);
+  }
+
+  /* ---------- TITLES ---------- */
+  .option-card h2, #form-card h2 {
+    font-size: 24px;
+    color: #0d9488;
+    margin: 0 0 15px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+
+  .option-card i {
+    color: #0d9488;
+  }
+
+  /* ---------- LIST ---------- */
+  .option-card ul {
+    padding-left: 20px;
+    margin: 0;
+    color: #444;
+    line-height: 1.5;
+    flex-grow: 1;
+  }
+
+  .option-card li {
+    margin-bottom: 12px;
+  }
+
+  /* ---------- MODERN BUTTON ---------- */
+  .sign-btn, #form-card button {
+    background-color: #14b8a6;
+    border: none;
+    padding: 16px;
+    border-radius: 50px;
+    font-size: 18px;
+    color: white;
+    cursor: pointer;
+    margin-top: 25px;
+    transition: 0.25s ease;
+    width: 100%;
+  }
+
+  .sign-btn:hover, #form-card button:hover {
+    background-color: #0d9488;
+    box-shadow: 0 8px 18px rgba(20,184,166,0.3);
+    transform: translateY(-2px);
+  }
+
+  /* ---------- FORM SECTION ---------- */
+  #form-section {
+    display: none;
+    justify-content: center;
+    padding: 40px 20px;
+  }
+
+  label {
+    display: block;
+    font-weight: 600;
+    margin-top: 15px;
+  }
+
+  input, select {
+    width: 100%;
+    padding: 14px;
+    margin-top: 6px;
+    border-radius: 12px;
+    border: 1px solid #ccc;
+    font-size: 16px;
+    box-sizing: border-box;
+    height: 48px;  /* uniform height */
+  }
+
+  @media (max-width: 700px) {
+    .options-container {
+      flex-direction: column;
+      align-items: center;
+    }
+  }
+</style>
+</head>
+<body>
+
+<div class="header">
+  <h1>Find Your Social Events!</h1>
+  <p>Choose the option that best fits your interest</p>
+</div>
+
+<div class="options-container" id="landing">
+  <!-- Option A -->
+  <div class="option-card">
+    <h2><i class="fas fa-calendar-check"></i> Option A – Find Your Events</h2>
+    <ul>
+      <li>Browse and join social events organized by the platform.</li>
+    </ul>
+    <button class="sign-btn" onclick="chooseOption('Option A')">SIGN ME IN!</button>
+  </div>
+
+  <!-- Option B -->
+  <div class="option-card">
+    <h2><i class="fas fa-users"></i> Option B – Join & Create Events</h2>
+    <ul>
+      <li>Browse and join social events organized by the platform.</li>
+      <li>Organize private events or parties with our planning and hosting support.</li>
+      <li>Organize public events and get them promoted on our platform.</li>
+    </ul>
+    <button class="sign-btn" onclick="chooseOption('Option B')">SIGN ME IN!</button>
+  </div>
+</div>
+
+<!-- Form Section -->
+<div id="form-section">
+  <div class="option-card" id="form-card">
+    <h2><i class="fas fa-user"></i> Getting to Know You</h2>
+
+    <label>Age Group</label>
+    <select id="age">
+      <option value="">Select...</option>
+      <option><18</option>
+      <option>18–24</option>
+      <option>25–34</option>
+      <option>35–44</option>
+      <option>45+</option>
+    </select>
+
+    <label>Current Occupation</label>
+    <input type="text" id="occupation" placeholder="E.g., Entrepreneurs, Sales, Creative Professionals">
+
+    <label>What do you expect from our service?</label>
+    <input type="text" id="expectations" placeholder="Tell us your expectations">
+
+    <button onclick="submitForm()">Submit</button>
+  </div>
+</div>
+
+<script>
+const postUrl = "https://sheetdb.io/api/v1/i9i07a6ouvkjx";
+let selectedOption = "";
+
+function chooseOption(option) {
+  selectedOption = option;
+  document.getElementById("landing").style.display = "none";
+  document.getElementById("form-section").style.display = "flex";
+}
+
+function submitForm() {
+  let age = document.getElementById("age").value;
+  let occupation = document.getElementById("occupation").value;
+  let expectations = document.getElementById("expectations").value;
+
+  if (!age || !occupation || !expectations) {
+    alert("Please fill in all fields!");
+    return;
+  }
+
+  fetch(postUrl, {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({
+      data: [
+        {
+          choice: selectedOption,
+          age: age,
+          occupation: occupation,
+          expectations: expectations
+        }
+      ]
+    })
+  })
+  .then(() => {
+    alert("Thank you! Your response has been submitted.");
+    location.reload();
+  })
+  .catch(() => alert("Error sending data."));
+}
+</script>
+
+</body>
+</html>
